@@ -119,3 +119,31 @@ def LoadGraphFromFile(filename):
         print(f"Error: El archivo {filename} no se encuentra.")
     return G
 
+def RemoveNode(self, name):
+    self.nodes = [n for n in self.nodes if n.name != name]
+    self.segments = [s for s in self.segments if s.origin.name != name and s.destination.name != name]
+
+def SaveToFile(self, filename):
+    with open(filename, 'w') as f:
+        for node in self.nodes:
+            f.write(f"{node.name} {node.x} {node.y}\n")
+        f.write("SEGMENTS\n")
+        for seg in self.segments:
+            f.write(f"{seg.name} {seg.origin.name} {seg.destination.name} {seg.cost}\n")
+
+@staticmethod
+def LoadFromFile(filename):
+    G = Graph()
+    with open(filename, 'r') as f:
+        lines = f.readlines()
+    i = 0
+    while i < len(lines) and lines[i].strip() != "SEGMENTS":
+        name, x, y = lines[i].split()
+        G.AddNode(Node(name, float(x), float(y)))
+        i += 1
+    i += 1
+    while i < len(lines):
+        name, origin, dest, *rest = lines[i].split()
+        G.AddSegment(name, origin, dest)
+        i += 1
+    return G
