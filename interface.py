@@ -1,10 +1,3 @@
-import tkinter as tk
-from tkinter import filedialog, messagebox
-import matplotlib.pyplot as plt
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-from Graph import *  # Assuming Graph.py contains the Graph class and other related methods.
-
-
 class GraphApp:
     def __init__(self, root):
         self.root = root
